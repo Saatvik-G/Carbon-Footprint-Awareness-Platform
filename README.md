@@ -1,6 +1,6 @@
 # 🌿 EcoTrace — Personal Carbon Footprint Intelligence Platform
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-22c55e?style=for-the-badge&logo=github)](https://Saatvik-G.github.io/ecotrace)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-22c55e?style=for-the-badge&logo=github)](https://Saatvik-G.github.io/Carbon-Footprint-Awareness-Platform)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
 > **A smart, AI-powered web app that helps individuals understand, track, and meaningfully reduce their carbon footprint — one action at a time.**
