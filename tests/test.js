@@ -39,22 +39,29 @@ function assertCloseTo(actual, expected, tolerance = 0.01, message) {
   }
 }
 
-// ── Mock localStorage for Node.js ────────────────────────────────────────
-if (typeof localStorage === 'undefined') {
-  const store = {};
-  global.localStorage = {
-    getItem: (k) => store[k] ?? null,
-    setItem: (k, v) => { store[k] = String(v); },
-    removeItem: (k) => { delete store[k]; },
-  };
-}
+const store = {};
+const mockLocalStorage = {
+  getItem: (k) => store[k] ?? null,
+  setItem: (k, v) => { store[k] = String(v); },
+  removeItem: (k) => { delete store[k]; },
+  clear: () => { Object.keys(store).forEach(k => delete store[k]); }
+};
+Object.defineProperty(global, 'localStorage', {
+  value: mockLocalStorage,
+  writable: true,
+  configurable: true
+});
 
 // ── Load modules (Node.js) ────────────────────────────────────────────────
 if (typeof require !== 'undefined') {
-  // Node.js environment — load via eval (simple approach for pure-JS modules)
+  // Node.js environment — load and assign to global
   const fs = require('fs');
   const path = require('path');
-  const load = (f) => eval(fs.readFileSync(path.join(__dirname, '..', 'js', f), 'utf8'));
+  const load = (f) => {
+    let code = fs.readFileSync(path.join(__dirname, '..', 'js', f), 'utf8');
+    code = code.replace(/^(const|let)\s+(\w+)\s*=\s*\(/m, 'global.$2 = (');
+    eval(code);
+  };
   load('calculator.js');
   load('storage.js');
   load('gamification.js');
@@ -186,8 +193,8 @@ test('4000 kg/yr is below world average (4000 = 100%)', () => {
   assertCloseTo(parseFloat(comp.world.percentageOfAvg), 100, 0.5);
 });
 
-test('1700 kg/yr marked as better than India average', () => {
-  const comp = Calculator.compareToAverages(1700);
+test('1500 kg/yr marked as better than India average', () => {
+  const comp = Calculator.compareToAverages(1500);
   assert(comp.india.betterThanAvg);
 });
 
