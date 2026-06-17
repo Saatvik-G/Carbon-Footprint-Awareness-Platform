@@ -225,7 +225,7 @@ const AIEngine = (() => {
     ],
   };
 
-  function getTipForCategory(category, data) {
+  function getTipForCategory(category) {
     const tips = {
       transport: 'Consider switching 1-2 days per week to public transit or cycling.',
       food: 'Try replacing 2 beef meals per week with plant-based alternatives.',
@@ -400,8 +400,6 @@ const AIEngine = (() => {
   function getDashboardInsight() {
     const context = buildContext();
     const tips = getPersonalizedTips(1);
-    const todayKg = Storage.getDailyTotal(new Date().toISOString().slice(0, 10));
-    const rating = Calculator.getDailyRating(todayKg);
 
     if (tips.length > 0) {
       return {

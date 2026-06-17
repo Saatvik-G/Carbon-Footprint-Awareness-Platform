@@ -9,7 +9,6 @@ const App = (() => {
 
   // ── State ─────────────────────────────────────────────────────────────────
   let currentView = 'dashboard';
-  let chatHistory = [];
 
   // ── Router ────────────────────────────────────────────────────────────────
 
@@ -314,7 +313,7 @@ const App = (() => {
 
     try {
       const result = Calculator.calculate(currentCategory, type, quantity);
-      const entry  = Storage.addLog({
+      Storage.addLog({
         category: currentCategory,
         type,
         quantity,
@@ -372,7 +371,6 @@ const App = (() => {
     const breakdown7  = Storage.getCategoryBreakdown(7);
     const breakdown30 = Storage.getCategoryBreakdown(30);
     const daily30     = Storage.getDailyTotals(30);
-    const daily7      = Storage.getDailyTotals(7);
     const weeklyKg    = Object.values(breakdown7).reduce((s, v) => s + v, 0);
     const monthlyKg   = Object.values(breakdown30).reduce((s, v) => s + v, 0);
     const annualEst   = weeklyKg * 52;

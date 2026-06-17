@@ -38,10 +38,6 @@ const Storage = (() => {
     }
   }
 
-  /** Remove a key */
-  function remove(key) {
-    localStorage.removeItem(key);
-  }
 
   // ── Activity Logs ─────────────────────────────────────────────────────────
 

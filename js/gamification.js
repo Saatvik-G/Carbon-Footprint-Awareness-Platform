@@ -192,7 +192,6 @@ const Gamification = (() => {
       : null;
 
     // Food stats
-    const recentFoodLogs = Storage.getRecentLogs(7).filter(l => l.category === 'food');
     const plantBasedMeals = logs.filter(l => l.type === 'vegan' || l.type === 'vegetarian').length;
     const lastBeefLog = [...logs].reverse().find(l => l.type === 'beef');
     const daysSinceBeef = lastBeefLog
