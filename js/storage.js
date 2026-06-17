@@ -5,6 +5,8 @@
  */
 
 const Storage = (() => {
+  "use strict";
+
   const KEYS = {
     LOGS:         'ecotrace_logs',
     PROFILE:      'ecotrace_profile',

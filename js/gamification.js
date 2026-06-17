@@ -5,6 +5,7 @@
  */
 
 const Gamification = (() => {
+  "use strict";
 
   // ── Badge Definitions ─────────────────────────────────────────────────────
   const BADGES = [

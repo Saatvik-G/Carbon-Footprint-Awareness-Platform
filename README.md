@@ -17,7 +17,7 @@ The app targets one of the most critical challenges of our era: translating awar
 
 ## 🚀 Live Demo
 
-👉 **[ecotrace.example.com](https://YOUR_USERNAME.github.io/ecotrace)**
+👉 **[Live Demo](https://saatvik-g.github.io/Carbon-Footprint-Awareness-Platform/)**
 
 On first load, the app seeds realistic demo data so you can immediately explore all features.
 
@@ -234,7 +234,7 @@ npx serve .
 ```
 1. Push to GitHub
 2. Settings → Pages → Source: main branch / root
-3. Visit https://YOUR_USERNAME.github.io/REPO_NAME
+3. Visit https://saatvik-g.github.io/Carbon-Footprint-Awareness-Platform/
 ```
 
 ---

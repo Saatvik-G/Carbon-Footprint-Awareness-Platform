@@ -11,6 +11,7 @@
  */
 
 const AIEngine = (() => {
+  "use strict";
 
   // ── Tip Library ───────────────────────────────────────────────────────────
   // Each tip has: id, category, impact ('high'|'medium'|'low'), condition fn, message, action

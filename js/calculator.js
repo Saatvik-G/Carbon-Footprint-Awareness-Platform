@@ -5,6 +5,8 @@
  */
 
 const Calculator = (() => {
+  "use strict";
+
   // ── Emission Factors (kg CO₂e per unit) ──────────────────────────────────
   // Sources: EPA (2023), DEFRA (2023), GHG Protocol
 

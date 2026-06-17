@@ -5,6 +5,7 @@
  */
 
 const App = (() => {
+  "use strict";
 
   // ── State ─────────────────────────────────────────────────────────────────
   let currentView = 'dashboard';

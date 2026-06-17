@@ -5,6 +5,8 @@
  */
 
 const Charts = (() => {
+  "use strict";
+
   // ── Chart Registry ────────────────────────────────────────────────────────
   const instances = {};
 

@@ -52,6 +52,43 @@ Object.defineProperty(global, 'localStorage', {
   configurable: true
 });
 
+// Mock basic DOM environment for testing UI/App modules in Node.js
+if (typeof document === 'undefined') {
+  const noop = () => {};
+  const mockElement = {
+    style: {},
+    classList: {
+      add: noop,
+      remove: noop,
+      toggle: () => false,
+    },
+    setAttribute: noop,
+    removeAttribute: noop,
+    appendChild: noop,
+    addEventListener: noop,
+    remove: noop,
+    getContext: () => ({
+      createLinearGradient: () => ({ addColorStop: noop })
+    }),
+  };
+  global.document = {
+    getElementById: () => mockElement,
+    createElement: () => mockElement,
+    body: { appendChild: noop },
+    querySelectorAll: () => [],
+    addEventListener: noop,
+  };
+  global.window = {
+    addEventListener: noop,
+  };
+  global.performance = { now: () => Date.now() };
+  global.requestAnimationFrame = (cb) => setTimeout(cb, 0);
+  global.Chart = class MockChart {
+    constructor() {}
+    destroy() {}
+  };
+}
+
 // ── Load modules (Node.js) ────────────────────────────────────────────────
 if (typeof require !== 'undefined') {
   // Node.js environment — load and assign to global
@@ -65,7 +102,10 @@ if (typeof require !== 'undefined') {
   load('calculator.js');
   load('storage.js');
   load('gamification.js');
+  load('charts.js');
+  load('ui.js');
   load('ai-engine.js');
+  load('app.js');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -395,6 +435,86 @@ test('getDashboardInsight returns object with required keys', () => {
   assert('title' in insight, 'Has title');
   assert('body' in insight, 'Has body');
   assert('icon' in insight, 'Has icon');
+});
+
+// ── UI TESTS ──────────────────────────────────────────────────────────────
+console.log('\n🎨 UI — Render Helpers');
+
+test('getCategoryMeta returns correct colors and labels', () => {
+  const t = UI.getCategoryMeta('transport');
+  assertEqual(t.label, 'Transport');
+  assertEqual(t.color, '#0ea5e9');
+  
+  const unknown = UI.getCategoryMeta('unknown_cat');
+  assertEqual(unknown.label, 'unknown_cat');
+});
+
+test('renderLogCard returns HTML with correct values', () => {
+  const html = UI.renderLogCard({
+    id: 'test_log_1',
+    category: 'transport',
+    type: 'car_petrol',
+    quantity: 10,
+    kgCO2e: 1.92,
+    label: 'Car',
+    icon: '🚗',
+    unit: 'km',
+    timestamp: '2024-01-01T12:00:00.000Z'
+  });
+  assert(html.includes('test_log_1'), 'HTML should contain ID');
+  assert(html.includes('1.92'), 'HTML should contain emissions');
+  assert(html.includes('Car'), 'HTML should contain label');
+});
+
+test('renderBadge returns HTML containing description and status', () => {
+  const html = UI.renderBadge({
+    id: 'first_log',
+    name: 'First Step',
+    description: 'Logged your first activity',
+    icon: '🌱',
+    tier: 'bronze',
+    unlocked: true,
+    unlockedAt: '2024-01-01T12:00:00.000Z'
+  });
+  assert(html.includes('First Step'), 'HTML should contain badge name');
+  assert(html.includes('BRONZE'), 'HTML should contain tier name');
+});
+
+test('renderEquivalencies returns informative values', () => {
+  const html = UI.renderEquivalencies(10);
+  assert(html.includes('equiv-card'), 'HTML should contain cards');
+  assert(html.includes('Smartphone charges'), 'HTML should contain smartphone equivalency');
+});
+
+// ── CHARTS TESTS ──────────────────────────────────────────────────────────
+console.log('\n📊 Charts — Visualizations');
+
+test('renderTrend executes without crashing', () => {
+  let crashed = false;
+  try {
+    Charts.renderTrend('test-canvas', [{ label: 'Mon', total: 5.5 }]);
+  } catch {
+    crashed = true;
+  }
+  assert(!crashed, 'renderTrend should not throw');
+});
+
+test('renderDonut executes without crashing', () => {
+  let crashed = false;
+  try {
+    Charts.renderDonut('test-canvas', { transport: 10, food: 5 });
+  } catch {
+    crashed = true;
+  }
+  assert(!crashed, 'renderDonut should not throw');
+});
+
+// ── APP TESTS ─────────────────────────────────────────────────────────────
+console.log('\n📱 App — Core Router');
+
+test('App exists and exposes navigate function', () => {
+  assert(typeof App === 'object', 'App should be an object');
+  assert(typeof App.navigate === 'function', 'App should expose navigate');
 });
 
 // ── SUMMARY ───────────────────────────────────────────────────────────────
