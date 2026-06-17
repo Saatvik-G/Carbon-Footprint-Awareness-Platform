@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EcoTrace — Your personal carbon footprint intelligence platform. Track, understand, and reduce your CO₂ emissions with AI-powered personalized insights.">
+  <meta name="theme-color" content="#0b1a10">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="EcoTrace — Carbon Footprint Intelligence">
+  <meta property="og:description" content="Track your daily carbon emissions and get personalized AI insights to reduce your footprint.">
+  <meta property="og:type" content="website">
+
+  <title>EcoTrace — Carbon Footprint Intelligence</title>
+
+  <!-- Preconnect for fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Favicon (inline SVG as data URI) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Chart.js CDN (pinned version for stability) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" defer></script>
+</head>
+
+<body>
+  <!-- Skip Navigation (Accessibility) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Sidebar Overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()" aria-hidden="true"></div>
+
+  <div class="app-shell">
+
+    <!-- ── Sidebar ────────────────────────────────────────── -->
+    <nav class="sidebar" id="sidebar" aria-label="Main navigation">
+      <a href="#" class="sidebar-logo" onclick="return false;" aria-label="EcoTrace Home">
+        <div class="sidebar-logo__icon" aria-hidden="true">🌿</div>
+        <span class="sidebar-logo__text">Eco<span>Trace</span></span>
+      </a>
+
+      <span class="sidebar-section-label">Navigation</span>
+      <ul class="nav-list" role="list">
+        <li>
+          <button class="nav-item nav-item--active" data-view="dashboard"
+                  aria-current="page" aria-label="Dashboard">
+            <span class="nav-item__icon" aria-hidden="true">📊</span>
+            <span class="nav-item__label">Dashboard</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item" data-view="log" aria-label="Log Activity">
+            <span class="nav-item__icon" aria-hidden="true">➕</span>
+            <span class="nav-item__label">Log Activity</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item" data-view="analytics" aria-label="Analytics">
+            <span class="nav-item__icon" aria-hidden="true">📈</span>
+            <span class="nav-item__label">Analytics</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item" data-view="coach" aria-label="AI Eco-Coach">
+            <span class="nav-item__icon" aria-hidden="true">🤖</span>
+            <span class="nav-item__label">AI Coach</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item" data-view="achievements" aria-label="Achievements">
+            <span class="nav-item__icon" aria-hidden="true">🏆</span>
+            <span class="nav-item__label">Achievements</span>
+          </button>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <p class="sidebar-footer__info">
+          🌱 Data stored locally<br>
+          No account required
+        </p>
+        <p class="sidebar-footer__version">EcoTrace v1.0 · 2024</p>
+      </div>
+    </nav>
+
+    <!-- ── Main Content Wrapper ───────────────────────────── -->
+    <div class="main-content-wrap">
+
+      <!-- Top Bar -->
+      <header class="topbar" role="banner">
+        <div style="display:flex;align-items:center;gap:12px">
+          <button class="hamburger" id="hamburger-btn"
+                  onclick="toggleSidebar()"
+                  aria-label="Toggle navigation menu"
+                  aria-expanded="false"
+                  aria-controls="sidebar">
+            ☰
+          </button>
+          <span class="topbar__title">🌿 EcoTrace — Carbon Intelligence</span>
+        </div>
+        <div class="topbar-actions">
+          <div class="user-chip" aria-label="User profile">
+            <div class="user-chip__avatar" aria-hidden="true">🌿</div>
+            <span id="user-name">Eco Warrior</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main View (dynamically rendered by app.js) -->
+      <main id="main-content" role="main" aria-label="Main content area" aria-live="polite">
+        <!-- Content injected by JavaScript -->
+        <div style="text-align:center;padding:80px 20px;color:#6b7280">
+          <div style="font-size:48px;margin-bottom:16px">🌿</div>
+          <p>Loading EcoTrace…</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ── Mobile Bottom Navigation ─────────────────────────── -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <button class="mobile-nav-item mobile-nav-item--active" data-view="dashboard"
+            onclick="App.navigate('dashboard');setMobileActive(this)"
+            aria-label="Dashboard" aria-current="page">
+      <span class="mobile-nav-item__icon" aria-hidden="true">📊</span>
+      <span>Dashboard</span>
+    </button>
+    <button class="mobile-nav-item" data-view="log"
+            onclick="App.navigate('log');setMobileActive(this)"
+            aria-label="Log Activity">
+      <span class="mobile-nav-item__icon" aria-hidden="true">➕</span>
+      <span>Log</span>
+    </button>
+    <button class="mobile-nav-item" data-view="analytics"
+            onclick="App.navigate('analytics');setMobileActive(this)"
+            aria-label="Analytics">
+      <span class="mobile-nav-item__icon" aria-hidden="true">📈</span>
+      <span>Analytics</span>
+    </button>
+    <button class="mobile-nav-item" data-view="coach"
+            onclick="App.navigate('coach');setMobileActive(this)"
+            aria-label="AI Coach">
+      <span class="mobile-nav-item__icon" aria-hidden="true">🤖</span>
+      <span>Coach</span>
+    </button>
+    <button class="mobile-nav-item" data-view="achievements"
+            onclick="App.navigate('achievements');setMobileActive(this)"
+            aria-label="Achievements">
+      <span class="mobile-nav-item__icon" aria-hidden="true">🏆</span>
+      <span>Badges</span>
+    </button>
+  </nav>
+
+  <!-- ── JavaScript Modules (order matters — dependencies first) ── -->
+  <script src="js/calculator.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/gamification.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/ai-engine.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- ── Inline Shell Utilities ────────────────────────────── -->
+  <script>
+    // Mobile sidebar toggle
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      const btn     = document.getElementById('hamburger-btn');
+      const isOpen  = sidebar.classList.toggle('sidebar--open');
+      overlay.classList.toggle('sidebar-overlay--active', isOpen);
+      btn.setAttribute('aria-expanded', isOpen);
+    }
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('sidebar--open');
+      document.getElementById('sidebar-overlay').classList.remove('sidebar-overlay--active');
+      document.getElementById('hamburger-btn').setAttribute('aria-expanded', 'false');
+    }
+
+    // Mobile nav active state
+    function setMobileActive(el) {
+      document.querySelectorAll('.mobile-nav-item').forEach(b => {
+        b.classList.remove('mobile-nav-item--active');
+        b.removeAttribute('aria-current');
+      });
+      el.classList.add('mobile-nav-item--active');
+      el.setAttribute('aria-current', 'page');
+      closeSidebar();
+    }
+
+    // Sync sidebar nav with mobile nav clicks
+    document.addEventListener('DOMContentLoaded', () => {
+      // Patch App.navigate to also update mobile nav
+      const _navigate = App.navigate.bind(App);
+      App.navigate = (view) => {
+        _navigate(view);
+        // sync mobile nav
+        document.querySelectorAll('.mobile-nav-item').forEach(b => {
+          const isActive = b.dataset.view === view;
+          b.classList.toggle('mobile-nav-item--active', isActive);
+          if (isActive) b.setAttribute('aria-current', 'page');
+          else b.removeAttribute('aria-current');
+        });
+        closeSidebar();
+      };
+    });
+
+    // Keyboard shortcut: press Escape to close sidebar on mobile
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSidebar();
+    });
+  </script>
+</body>
+</html>
